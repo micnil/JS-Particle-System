@@ -1,5 +1,4 @@
 
-
 function Particle(pos,velocity,acceleration){
       this.position = pos || new Vector(0, 0);
       this.velocity = velocity || new Vector(0, 0);
@@ -26,5 +25,10 @@ Particle.prototype = {
       moveParticle: function() {
             this.x = this.x+Math.random()*10-5;
             this.y = this.y+Math.random()*10-5;
+      }
+
+      euler: function(changeFunction, vector, dt) {
+
+            return vector = vector + changeFunction()*dt;
       }
 }
