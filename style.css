@@ -1,0 +1,14 @@
+html{
+font-family: helvetica, arial, sans-serif;
+}
+body{
+margin: 0 auto;
+overflow: hidden;
+}
+.wrapper{
+width: 720px;
+margin: 0 auto;
+}
+#container{
+background: #fff;
+}
