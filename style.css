@@ -10,5 +10,8 @@ width: 720px;
 margin: 0 auto;
 }
 #container{
-background: #fff;
+background: #000;
+}
+#canvas{
+background: #000;
 }
