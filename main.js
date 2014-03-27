@@ -3,7 +3,6 @@ window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequest
 var context;
 var WIDTH = window.innerWidth;
 var HEIGHT = window.innerHeight;
-var dt = 0.02
 
 function main(){
 
@@ -13,16 +12,39 @@ function main(){
 	canvas.height = HEIGHT;
 	context = canvas.getContext('2d');
 
-	particleSystem=new ParticleSystem();
+	particleSystem = new ParticleSystem();
 
 	particleSystem.init()
 
+	var lastCall = timestamp();
+	var accum = 0;
+	var dt = 1 / 60;
+	fpsmeter = new FPSMeter({ decimals: 0, graph: true, theme: 'dark', left: '5px' });
+
 	function loop(){
-		particleSystem.update();
+		fpsmeter.tickStart();
+		var delta = (timestamp() - lastCall)/1000;
+		lastCall = timestamp();
+		accum += delta;
+
+		while (accum >= dt) {
+
+	        // Update the game's internal state (i.e. physics, logic, etc)
+	        particleSystem.update(dt);
+
+	        // Subtract one "timestep" from the accumulator
+	        accum -= dt;
+    	}
+
 		particleSystem.draw();
+		fpsmeter.tick();
 		requestAnimationFrame(loop);
 	}
 	requestAnimationFrame(loop);
+}
+
+function timestamp() {
+	return window.performance && window.performance.now ? window.performance.now() : new Date().getTime();
 }
 
 window.onload = main;

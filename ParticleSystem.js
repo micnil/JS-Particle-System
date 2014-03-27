@@ -6,11 +6,15 @@ function ParticleSystem(){
 
 ParticleSystem.prototype = {
 
-	update: function() { 
+	update: function(dt) { 
 
 		//shoot particles from emitters
 		for(var i=0;i<this.emitters.length;i++)
 			this.particles.push(this.emitters[i].shoot());
+
+		// reset acceleration
+		for(var i=0;i<this.particles.length;i++)
+			this.particles[i].acceleration=new Vector(0,0);
 
 		//update acceleration depending on distance to forcefields
 		for(var i=0;i<this.forceFields.length;i++)
@@ -19,14 +23,14 @@ ParticleSystem.prototype = {
 			}
 		//move the particles (update velocity & position)
 		for(var i=0;i<this.particles.length;i++)
-			this.particles[i].move();
+			this.particles[i].move(dt);
 		//console.log("Particle[0] pos: [ %s, %s ]", this.particles[0].position.x,this.particles[0].position.y);
 		
 	},
 
 	init: function() {
-		this.emitters.push(new Emitter(new Vector(WIDTH/2, HEIGHT/2),new Vector(1, 0),20.0 ,20.0 ));
-		this.forceFields.push(new ForceField(new Vector(3*WIDTH/4, HEIGHT/2)));
+		this.emitters.push(new Emitter(new Vector(WIDTH/2, HEIGHT/2),new Vector(1, 0),20.0 ,40.0 ));
+		this.forceFields.push(new ForceField(new Vector(3*WIDTH/4, HEIGHT/2),2.0));
 	},
 
 	draw: function() {
@@ -52,7 +56,7 @@ ParticleSystem.prototype = {
 		for(var i=0;i<this.forceFields.length;i++){
 			context.fillStyle = this.forceFields[i].color;
 			context.beginPath();
-			context.arc(this.forceFields[i].position.x, this.forceFields[i].position.y, 15, 0, Math.PI * 2);
+			context.arc(this.forceFields[i].position.x, this.forceFields[i].position.y, this.forceFields[i].weight, 0, Math.PI * 2);
 			context.closePath();
 			context.fill();
 		}
