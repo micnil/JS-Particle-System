@@ -26,16 +26,30 @@ Vector.prototype = {
 		var newPosX=this.x*R[0] + this.y*R[1];
 		var newPosY=this.x*R[2] + this.y*R[3];	
 
-		// this.x=newPosX;
-		// this.y=newPosY; 
 		return new Vector(newPosX,newPosY)
 	},
-	normalize: function(vector) { 
+	normalize: function() { 
 		this.x = this.x / Math.sqrt(this.x*this.x + this.y*this.y);
 		this.y = this.y / Math.sqrt(this.x*this.x + this.y*this.y);
 	},
 	distanceFrom: function(vector) { 
 		
 		return Math.sqrt((vector.x - this.x)*(vector.x - this.x) + (vector.y - this.y)*(vector.y - this.y));
+	},
+	reflect: function(vector) { 
+		
+		var incoming = this.invertDirection();
+		var project = incoming.projectOn(vector);
+		var reflection = incoming.subtract(project).multiply(2.0).add(incoming);
+		return reflection;
+	},
+	invertDirection: function() { 
+		
+		return new Vector(-this.x,-this.y);
+	},
+	projectOn: function(vector) { 
+		
+		var p = (this.x*vector.x + this.y*vector.y) / (vector.x*vector.x + vector.y*vector.y);
+		return new Vector(p*vector.x,p*vector.y);
 	},
 }

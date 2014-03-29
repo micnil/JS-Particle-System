@@ -3,7 +3,7 @@ function Particle(pos,velocity,acceleration){
       this.position = pos || new Vector(0, 0);
       this.velocity = velocity || new Vector(0, 0);
       this.acceleration = acceleration || new Vector(0, 0);
-      this.color = '#003300';
+      this.color = '#00ff00';
 }
 
 Particle.prototype = {

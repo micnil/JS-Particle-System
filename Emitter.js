@@ -4,7 +4,7 @@ function Emitter(pos ,d ,a ,m ){
 	this.direction = d || new Vector(0, 0);
 	this.angle = a || 0;
 	this.magnitude = m || 0;
-	this.color = '#000033';
+	this.color = '#000066';
 
 }
 Emitter.prototype = {
