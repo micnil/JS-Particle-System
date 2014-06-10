@@ -13,7 +13,7 @@ Vector.prototype = {
 		return new Vector(vector.x + this.x ,vector.y + this.y);
 	},
 	subtract: function(vector) { 
-		return new Vector(vector.x - this.x ,vector.y - this.y);
+		return new Vector(this.x - vector.x ,this.y - vector.y);
 	},
 	multiply: function(scalar){
 		return new Vector(this.x * scalar, this.y * scalar);
@@ -40,7 +40,7 @@ Vector.prototype = {
 		
 		var incoming = this.invertDirection();
 		var project = incoming.projectOn(vector);
-		var reflection = incoming.subtract(project).multiply(2.0).add(incoming);
+		var reflection = project.subtract(incoming).multiply(2.0).add(incoming);
 		return reflection;
 	},
 	invertDirection: function() { 

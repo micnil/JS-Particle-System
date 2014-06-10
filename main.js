@@ -1,9 +1,5 @@
 window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame ||
                               window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
-//var context;
-//var canvas;
-//var WIDTH = window.innerWidth;
-//var HEIGHT = window.innerHeight;
 
 function main(){
 
@@ -14,8 +10,8 @@ function main(){
 
 	particleSystem.init();
 
-	core = new Core(canvas,particleSystem);
-	core.startAnimationLoop();
+	var canvasManager = new CanvasManager(canvas,particleSystem);
+	canvasManager.startAnimationLoop();
 	
 }
 

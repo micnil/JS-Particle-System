@@ -9,10 +9,10 @@ ForceField.prototype = {
 
 	applyForce: function(particle) { 
 		var distance=this.position.distanceFrom(particle.position);
-		var repellDirection=this.position.subtract(particle.position);
+		var repellDirection=particle.position.subtract(this.position);
 
 		if(this.weight/distance>0.001)
-			particle.acceleration = particle.acceleration.add(repellDirection.multiply(this.weight/distance)).multiply(this.effect);
+			particle.acceleration = particle.acceleration.add(repellDirection.multiply(2*this.weight/distance)).multiply(this.effect);
 
 		if(distance<=this.weight)
 			particle.velocity = particle.velocity.reflect(repellDirection);	

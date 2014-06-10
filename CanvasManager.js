@@ -1,6 +1,6 @@
 var WIDTH = window.innerWidth;
 var HEIGHT = window.innerHeight;
-function Core(canvas, ps){
+function CanvasManager(canvas, ps){
 
 	this.canvas = canvas;
 	this.canvas.width = WIDTH;
@@ -19,13 +19,6 @@ function Core(canvas, ps){
 
 	// **** Keep track of events! ****
 
-	// This is an example of a closure!
-	// Right here "this" means the CanvasState. But we are making events on the Canvas itself,
-	// and when the events are fired on the canvas the variable "this" is going to mean the canvas!
-	// Since we still want to use this particular CanvasState in the events we have to save a reference to it.
-	// This is our reference!
-	var myCore = this;
-
 	//fixes a problem where double clicking causes text to get selected on the canvas
 	canvas.addEventListener('selectstart', function(e) { e.preventDefault(); return false; }, false);
 
@@ -35,7 +28,7 @@ function Core(canvas, ps){
 
 
 }
-Core.prototype = {
+CanvasManager.prototype = {
 
 	mouseDownListener : function(e) {
 		//console.log(this);
@@ -46,8 +39,7 @@ Core.prototype = {
 		if (mySel) {
 			// Keep track of where in the object we clicked
 			// so we can move it smoothly (see mousemove)
-			this.dragOff = mouseCoords.subtract(mySel);
-
+			this.dragOff = mouseCoords.subtract(mySel.position);
 			this.dragging = true;
 			this.selection = mySel;
 
@@ -66,8 +58,10 @@ Core.prototype = {
 			var mouseCoords = this.getMouseCoords(e);
 			// We don't want to drag the object by its top-left corner, we want to drag it
 			// from where we clicked. Thats why we saved the offset and use it here
-			//this.selection.position = mouseCoords.subtract(this.dragOff);
-			this.selection.position = mouseCoords;
+			this.selection.position = mouseCoords.subtract(this.dragOff);
+			console.log("this.dragOff.x: %s",this.dragOff.x);
+			console.log("this.selection.position.x: %s",this.selection.position.x);
+			//this.selection.position = mouseCoords;
 			console.log("selection.position: %s",this.selection.position);
 		}
 	},
@@ -91,24 +85,24 @@ Core.prototype = {
   		var accum = 0;
   		var dt = 1 / 60;
   		fpsmeter = new FPSMeter({ decimals: 0, graph: true, theme: 'dark', left: '5px' });
-  		myCore = this;
+  		myCanvasManager = this;
 
   		function loop(){
   			fpsmeter.tickStart();
-  			var delta = (myCore.timestamp() - lastCall)/1000;
-  			lastCall = myCore.timestamp();
+  			var delta = (myCanvasManager.timestamp() - lastCall)/1000;
+  			lastCall = myCanvasManager.timestamp();
   			accum += delta;
 
   			while (accum >= dt) {
 
 				// Update the game's internal state (i.e. physics, logic, etc)
-				myCore.particleSystem.update(dt);
+				myCanvasManager.particleSystem.update(dt);
 
 				// Subtract one "timestep" from the accumulator
 				accum -= dt;
 	    	}
 
-			myCore.particleSystem.draw(myCore.ctx);
+			myCanvasManager.particleSystem.draw(myCanvasManager.ctx);
 			fpsmeter.tick();
 			requestAnimationFrame(loop);
 		}
