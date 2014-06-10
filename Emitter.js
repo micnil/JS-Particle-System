@@ -22,6 +22,6 @@ Emitter.prototype = {
 	},
 
 	isHit: function(position) {
-		return position.distanceFrom(this.position) <= this.weight;
+		return position.distanceFrom(this.position) <= this.magnitude;
 	}
 }
