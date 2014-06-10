@@ -27,8 +27,6 @@ Particle.prototype = {
             this.y = this.y+Math.random()*10-5;
       },
       move: function(dt) {
-            // eulerStep(particles[i].velocity,particles[i].acceleration,dt);
-            // eulerStep(particles[i].position,particles[i].velocity,dt);
             this.velocity = eulerStep(this.velocity,this.acceleration,dt);
             this.position = eulerStep(this.position,this.velocity,dt);
       }

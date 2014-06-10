@@ -15,5 +15,13 @@ Emitter.prototype = {
 		var velocity = this.direction.rotate((Math.random()*2-1)*(this.angle/2)).multiply(this.magnitude);
 		//console.log("Shot a particle with velocity: [ %s, %s ]", velocity.x,velocity.y);
 		return new Particle(this.position,velocity,0);	
+	},
+
+	moveTo: function(position) {
+		this.position = position;
+	},
+
+	isHit: function(position) {
+		return position.distanceFrom(this.position) <= this.weight;
 	}
 }

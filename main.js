@@ -1,20 +1,22 @@
 window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame ||
                               window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
 var context;
+var canvas;
 var WIDTH = window.innerWidth;
 var HEIGHT = window.innerHeight;
 
 function main(){
 
 	console.log("startar");
-	var canvas = document.getElementById('canvas');
+	canvas = document.getElementById('canvas');
 	canvas.width = WIDTH;
 	canvas.height = HEIGHT;
 	context = canvas.getContext('2d');
 
 	particleSystem = new ParticleSystem();
 
-	particleSystem.init()
+	particleSystem.init();
+	theCanvas.addEventListener("mousedown", particleSystem.mouseDownListener, false);
 
 	var lastCall = timestamp();
 	var accum = 0;

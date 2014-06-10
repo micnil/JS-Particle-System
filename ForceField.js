@@ -16,5 +16,13 @@ ForceField.prototype = {
 
 		if(distance<=this.weight)
 			particle.velocity = particle.velocity.reflect(repellDirection);	
+	},
+
+	moveTo: function(position) {
+		this.position = position;
+	},
+
+	isHit: function(position) {
+		return position.distanceFrom(this.position) <= this.weight;
 	}
 }
