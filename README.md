@@ -18,4 +18,4 @@ is run on window.load
 
 open index.html in a modern browser to start.
 
-An external fps indicator is used.
+An external fps indicator is used.	
