@@ -1,17 +1,17 @@
 html{
-font-family: helvetica, arial, sans-serif;
+	font-family: helvetica, arial, sans-serif;
 }
 body{
-margin: 0 auto;
-overflow: hidden;
+	margin: 0 auto;
+	overflow: hidden;
 }
 .wrapper{
-width: 720px;
-margin: 0 auto;
+	width: 720px;
+	margin: 0 auto;
 }
 #container{
-background: #000;
+	background: #000;
 }
 #canvas{
-background: #000;
+	background: #000;
 }

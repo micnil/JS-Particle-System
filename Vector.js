@@ -1,6 +1,7 @@
 
-/** Vector math, used for position, velocity and acceleration
-*	Could get quite ugly for efficiency reasons
+/** 
+*	2D Vector math, used for position, velocity and acceleration
+*	Could get quite ugly..
 */
 function Vector(x, y){
 	this.x = x || 0;

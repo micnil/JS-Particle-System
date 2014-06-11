@@ -8,20 +8,23 @@ function CanvasManager(canvas, ps){
 	this.ctx = canvas.getContext('2d');
 
 	this.particleSystem = ps || new ParticleSystem();
+	
+	/*  states  */
 
-	// **** Keep track of state! ****
-
-	this.dragging = false; // Keep track of when we are dragging
-	// the current selected object. In the future we could turn this into an array for multiple selection
+	// When we are dragging an object, set to true.
+	this.dragging = false;
+	// The selected object that will be dragged. returned by particleSystem.
 	this.selection = null;
-	// See mousedown and mousemove events for explanation
+	//drag offset. so you can drag from anywhere in the object, not just center.
 	this.dragOff = new Vector();
 
-	// **** Keep track of events! ****
+	/* events */
 
 	//fixes a problem where double clicking causes text to get selected on the canvas
 	canvas.addEventListener('selectstart', function(e) { e.preventDefault(); return false; }, false);
 
+	//In future might not activate all listeners here, instead activate when needed
+	//(first mousedown, then mousemove untill mouseup)
 	canvas.addEventListener('mousedown', this.mouseDownListener.bind(this), false);
 	canvas.addEventListener('mousemove', this.mouseMoveListener.bind(this), false);
 	canvas.addEventListener('mouseup', this.mouseUpListener.bind(this), false)
@@ -31,22 +34,22 @@ function CanvasManager(canvas, ps){
 CanvasManager.prototype = {
 
 	mouseDownListener : function(e) {
-		//console.log(this);
 		var mouseCoords = this.getMouseCoords(e);
 
 		var mySel = this.particleSystem.getPressedObject(mouseCoords);
-		console.log(mySel);
+
 		if (mySel) {
-			// Keep track of where in the object we clicked
-			// so we can move it smoothly (see mousemove)
+
+			//saves the offset from center of object. Will produce a 
+			//smoother drag.
 			this.dragOff = mouseCoords.subtract(mySel.position);
 			this.dragging = true;
 			this.selection = mySel;
 
 			return;
 		}
-		// havent returned means we have failed to select anything.
-		// If there was an object selected, we deselect it
+
+		//failed to select, set the selection to null
 		if (this.selection) {
 			this.selection = null;
 		}
@@ -54,15 +57,18 @@ CanvasManager.prototype = {
 
 	mouseMoveListener : function(e) {
 		if (this.dragging){
-			console.log("selection: %s",this.selection);
+
 			var mouseCoords = this.getMouseCoords(e);
-			// We don't want to drag the object by its top-left corner, we want to drag it
-			// from where we clicked. Thats why we saved the offset and use it here
-			this.selection.position = mouseCoords.subtract(this.dragOff);
-			console.log("this.dragOff.x: %s",this.dragOff.x);
-			console.log("this.selection.position.x: %s",this.selection.position.x);
-			//this.selection.position = mouseCoords;
-			console.log("selection.position: %s",this.selection.position);
+			var newPosition = mouseCoords.subtract(this.dragOff);
+
+			//Change the position with ( mousecoordinates - the offset from center )
+			//this.selection.moveTo(newPosition);
+
+			//adding an easing to the movement.
+			//difference = newPosition - oldposition;
+			// selection is moved to : oldposition + difference * 0.65 (ease amount)
+			var difference = newPosition.subtract(this.selection.position);
+			this.selection.moveTo(this.selection.position.add(difference.multiply(0.65)))
 		}
 	},
 
@@ -100,7 +106,7 @@ CanvasManager.prototype = {
 
 				// Subtract one "timestep" from the accumulator
 				accum -= dt;
-	    	}
+			}
 
 			myCanvasManager.particleSystem.draw(myCanvasManager.ctx);
 			fpsmeter.tick();

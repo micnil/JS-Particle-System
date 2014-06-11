@@ -23,5 +23,14 @@ Emitter.prototype = {
 
 	isHit: function(position) {
 		return position.distanceFrom(this.position) <= this.magnitude;
+	},
+
+	draw: function(context){
+
+		context.fillStyle = this.color;
+		context.beginPath();
+		context.arc(this.position.x, this.position.y, 15, 0, Math.PI * 2);
+		context.closePath();
+		context.fill();
 	}
 }
