@@ -59,16 +59,8 @@ CanvasManager.prototype = {
 		if (this.dragging){
 
 			var mouseCoords = this.getMouseCoords(e);
-			var newPosition = mouseCoords.subtract(this.dragOff);
-
-			//Change the position with ( mousecoordinates - the offset from center )
-			//this.selection.moveTo(newPosition);
-
-			//adding an easing to the movement.
-			//difference = newPosition - oldposition;
-			// selection is moved to : oldposition + difference * 0.65 (ease amount)
-			var difference = newPosition.subtract(this.selection.position);
-			this.selection.moveTo(this.selection.position.add(difference.multiply(0.65)))
+			
+			this.selection.moveTo(this.dragOff, mouseCoords);
 		}
 	},
 

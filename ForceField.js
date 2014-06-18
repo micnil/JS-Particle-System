@@ -18,8 +18,15 @@ ForceField.prototype = {
 			particle.velocity = particle.velocity.reflect(repellDirection);	
 	},
 
-	moveTo : function(position) {
-		this.position = position;
+	moveTo : function(dragOff, mouseCoords) {
+
+		var newPosition = mouseCoords.subtract(dragOff);
+		var difference = newPosition.subtract(this.position);
+
+		//adding an easing to the movement.
+		//difference = newPosition - oldposition;
+		// selection is moved to : oldposition + difference * 0.65 (ease amount)
+		this.position = this.position.add(difference.multiply(0.65));
 	},
 
 	isHit : function(position) {
