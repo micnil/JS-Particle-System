@@ -3,14 +3,14 @@ window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequest
 
 function main(){
 
-	console.log("startar");
-	canvas = document.getElementById('canvas');
+	particleCanvas = document.getElementById('particleCanvas');
+	fieldCanvas = document.getElementById('fieldCanvas');
 
 	particleSystem = new ParticleSystem();
 
 	particleSystem.init();
 
-	var canvasManager = new CanvasManager(canvas,particleSystem);
+	var canvasManager = new CanvasManager(particleCanvas,fieldCanvas,particleSystem);
 	canvasManager.startAnimationLoop();
 	
 }

@@ -67,29 +67,28 @@ Emitter.prototype = {
 		context.closePath();
 		context.fill();
 
-		//offset = (typeof offset === 'number') ? offset : 0;
 		context.beginPath();
 		this.lineOffset=this.lineOffset+0.1;
 		
-	    if (typeof context.setLineDash === 'undefined') { //Firefox
-	        context.mozDash = [2];
-	        context.mozDashOffset = this.lineOffset;
+		if (typeof context.setLineDash === 'undefined') { //Firefox
+			context.mozDash = [2,1];
+			context.mozDashOffset = this.lineOffset;
 
-	    }
-	    else { //Chrome
-	        context.setLineDash([2]);
-	        context.lineDashOffset = this.lineOffset;
-	    }
+		}
+		else { //Chrome
+			context.setLineDash([2,3]);
+			context.lineDashOffset = this.lineOffset;
+		}
 
-	    var angleToShootingDirection = this.direction.getShortestAngleFrom(new Vector(1,0));
-	    context.arc(this.position.x,
-	    			this.position.y, 
-	    			this.radius, 
-	    			-angleToShootingDirection + (this.angle+0.03), 
-	    			(Math.PI * 2) - angleToShootingDirection - (this.angle+0.03));
+		var angleToShootingDirection = this.direction.getShortestAngleFrom(new Vector(1,0));
+		context.arc(this.position.x,
+			this.position.y, 
+			this.radius, 
+			-angleToShootingDirection + (this.angle+0.03), 
+			(Math.PI * 2) - angleToShootingDirection - (this.angle+0.03));
 
-	    context.strokeStyle = this.color;
-    	context.stroke();
+		context.strokeStyle = this.color;
+		context.stroke();
 	}
 
 	

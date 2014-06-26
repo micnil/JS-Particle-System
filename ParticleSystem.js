@@ -34,22 +34,23 @@ ParticleSystem.prototype = {
 		//this.forceFields.push(new ForceField(new Vector(WIDTH/2, 3*HEIGHT/4),15.0));
 	},
 
-	draw: function(context) {
+	draw: function(context, contextLayer) {
 
 		//this will fade away old position when objects move.
 		context.fillStyle = "rgba(0, 0, 0, 0.2)";
 		context.fillRect(0, 0, WIDTH, HEIGHT);
+		contextLayer.clearRect(0, 0, WIDTH, HEIGHT);
 
 		for(var i=0;i<this.particles.length;i++){
 			this.particles[i].draw(context);
 		}
 
 		for(var i=0;i<this.emitters.length;i++){
-			this.emitters[i].draw(context);
+			this.emitters[i].draw(contextLayer);
 		}
 
 		for(var i=0;i<this.forceFields.length;i++){
-			this.forceFields[i].draw(context);
+			this.forceFields[i].draw(contextLayer);
 		}
 
 	},
@@ -72,6 +73,18 @@ ParticleSystem.prototype = {
 		};
 
 		return selectedObject;
+	},
+
+	clearParticleSystem: function(){
+		while(this.particles.length > 0) {
+			this.particles.pop();
+		}
+		while(this.emitters.length > 0) {
+			this.emitters.pop();
+		}
+		while(this.forceFields.length > 0) {
+			this.forceFields.pop();
+		}
 	}
 
 

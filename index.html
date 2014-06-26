@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf8">
     <title>Michael Nilsson</title>
+    <link rel="stylesheet" href="normalize.css">
     <link rel="stylesheet" href="style.css">
     <script type="text/javascript" src="Vector.js"></script> 
     <script type="text/javascript" src="Particle.js"></script> 
@@ -15,7 +16,32 @@
 </head>
 <body>
     <div id="container">
-        <canvas id="canvas"></canvas>
+        <canvas id="particleCanvas"></canvas>
+        <canvas id="fieldCanvas"></canvas>
+        <div id="gui" draggable="true">
+            <div id="expand"><span>+</span></div>
+            <div id="startStop" class="menubox">
+                <p class="menutitle">Particle System</p>
+                <button type="button" id="pauseBtn" class="myButton" value="pause">pause</button>
+                <button type="button" id="clearBtn" class="myButton" value="clear">clear</button> 
+            </div>
+            <div id="emitterBox" class="menubox">
+                <p class="menutitle">Emitters</p>
+                <button type="button" id="createEmitterBtn" class="myButton" value="create">create</button>
+                <p class="menutext">speed of particles</p>
+                <input type="range" min="0" max="50" value="5" step="1" onchange="rangevalue.value=value" />
+            </div>
+            <div id="fieldBox" class="menubox">
+                <p class="menutitle">Force Fields</p>
+                <button type="button" id="createFieldBtn" class="myButton" value="create">create</button>
+                <p class="menutext">magnitude of field</p>
+                <input type="range" min="0" max="50" value="5" step="1" onchange="rangevalue.value=value" />
+                <form>
+                    <input type="radio" name="force" value="puller">Puller
+                    <input type="radio" name="force" value="pusher">Pusher
+                </form>
+            </div>
+        </div>
     </div>    
 </body>
 </html>

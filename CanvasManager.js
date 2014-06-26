@@ -1,13 +1,21 @@
 var WIDTH = window.innerWidth;
 var HEIGHT = window.innerHeight;
-function CanvasManager(canvas, ps){
+function CanvasManager(particleCanvas,fieldCanvas, ps){
 
-	this.canvas = canvas;
-	this.canvas.width = WIDTH;
-	this.canvas.height = HEIGHT;
-	this.ctx = canvas.getContext('2d');
+	this.particleCanvas = particleCanvas;
+	this.particleCanvas.width = WIDTH;
+	this.particleCanvas.height = HEIGHT;
+	this.ctx = particleCanvas.getContext('2d');
+
+	this.fieldCanvas = fieldCanvas;
+	this.fieldCanvas.width = WIDTH;
+	this.fieldCanvas.height = HEIGHT;
+	this.ctxLayer = fieldCanvas.getContext('2d');
 
 	this.particleSystem = ps || new ParticleSystem();
+
+	this.pauseBtn = document.getElementById('pauseBtn');
+	this.clearBtn = document.getElementById('clearBtn');
 	
 	/*  states  */
 
@@ -17,17 +25,21 @@ function CanvasManager(canvas, ps){
 	this.selection = null;
 	//drag offset. so you can drag from anywhere in the object, not just center.
 	this.dragOff = new Vector();
+	//if the freeze button is pressed, dont update states of particlesystem
+	this.freeze = false;
 
 	/* events */
 
 	//fixes a problem where double clicking causes text to get selected on the canvas
-	canvas.addEventListener('selectstart', function(e) { e.preventDefault(); return false; }, false);
+	fieldCanvas.addEventListener('selectstart', function(e) { e.preventDefault(); return false; }, false);
 
 	//In future might not activate all listeners here, instead activate when needed
 	//(first mousedown, then mousemove untill mouseup)
-	canvas.addEventListener('mousedown', this.mouseDownListener.bind(this), false);
-	canvas.addEventListener('mousemove', this.mouseMoveListener.bind(this), false);
-	canvas.addEventListener('mouseup', this.mouseUpListener.bind(this), false)
+	fieldCanvas.addEventListener('mousedown', this.mouseDownListener.bind(this), false);
+	fieldCanvas.addEventListener('mousemove', this.mouseMoveListener.bind(this), false);
+	fieldCanvas.addEventListener('mouseup', this.mouseUpListener.bind(this), false);
+	pauseBtn.addEventListener('click',  this.freezeBtnAction.bind(this),false);
+	clearBtn.addEventListener('click',  this.clearBtnAction.bind(this),false);
 
 
 }
@@ -70,7 +82,7 @@ CanvasManager.prototype = {
 
 	getMouseCoords : function(e) {
   		//getting mouse position correctly 
-  		var bRect = this.canvas.getBoundingClientRect();
+  		var bRect = this.particleCanvas.getBoundingClientRect();
   		mouseX = (e.clientX - bRect.left)*(WIDTH/bRect.width);
   		mouseY = (e.clientY - bRect.top)*(HEIGHT/bRect.height);
   		var mouseCoords = new Vector(mouseX,mouseY);
@@ -94,13 +106,14 @@ CanvasManager.prototype = {
   			while (accum >= dt) {
 
 				// Update the game's internal state (i.e. physics, logic, etc)
-				myCanvasManager.particleSystem.update(dt);
+				if(!myCanvasManager.freeze)
+					myCanvasManager.particleSystem.update(dt);
 
 				// Subtract one "timestep" from the accumulator
 				accum -= dt;
 			}
 
-			myCanvasManager.particleSystem.draw(myCanvasManager.ctx);
+			myCanvasManager.particleSystem.draw(myCanvasManager.ctx,myCanvasManager.ctxLayer);
 			fpsmeter.tick();
 			requestAnimationFrame(loop);
 		}
@@ -110,6 +123,22 @@ CanvasManager.prototype = {
 
 	timestamp : function() {
 		return window.performance && window.performance.now ? window.performance.now() : new Date().getTime();
+	},
+
+	freezeBtnAction: function(){
+		if(this.freeze){
+			this.freeze=false;
+			console.log(document.getElementById('pauseBtn').value);
+			this.pauseBtn.innerHTML = "pause";
+		}
+		else{
+			this.freeze=true;
+			this.pauseBtn.innerHTML = "start";
+		}
+	},
+
+	clearBtnAction: function(){
+		particleSystem.clearParticleSystem();
 	}
 
 }

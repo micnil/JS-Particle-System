@@ -2,8 +2,10 @@ function ForceField(pos,w,effect){
 	this.position = pos || new Vector(0, 0);
 	this.weight = w || 10.0;
 	this.effect = effect || 1.0;
-	this.color = '#660000';
-	//this.color = "rgb("+127+effect*127+", "+200+", "+0+")";
+	
+	//color depends on effect (puller or pusher)
+	var color = 127 + (effect*127);
+	this.color = "rgb("+color+",200, 0)";
 }
 ForceField.prototype = {
 
