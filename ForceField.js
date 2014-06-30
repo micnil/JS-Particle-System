@@ -1,3 +1,7 @@
+/* 
+*	Forcefield class, can act as a particle puller (gravity, effect=-1) and as
+*	a pusher (effect=1).
+*/
 function ForceField(pos,w,effect){
 	this.position = pos || new Vector(0, 0);
 	this.weight = w || 10.0;
@@ -12,6 +16,7 @@ ForceField.prototype = {
 	applyForce : function(particle) { 
 		var distance = this.position.distanceFrom(particle.position);
 
+		//force direction depends on effect
 		var forceDirection
 		if(this.effect==1)
 			forceDirection = particle.position.subtract(this.position);
@@ -20,6 +25,7 @@ ForceField.prototype = {
 
 		forceDirection.normalize();
 
+		//to avoid division with zero 
 		if(distance > this.weight-2)
 			particle.acceleration = particle.acceleration.add(forceDirection.multiply(50*this.weight/Math.sqrt(distance)));
 

@@ -1,3 +1,6 @@
+/** 
+*	Emitter class, the particle emitter is rotable and moveable.
+*/
 function Emitter(pos ,d ,a ,m, r ){
 
 	this.position = pos || new Vector(0, 0);

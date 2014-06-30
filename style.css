@@ -19,11 +19,7 @@ span{
 	color: #999999;
 }
 .menubox{
-	/*margin-top: 4px;
-	margin-bottom: 4px;
-	margin-left: 5px;*/
 	margin:4px 3%;
-
 	padding: 5px 0px;
 	width:94%;
 	background: #555;
@@ -34,9 +30,12 @@ span{
 	overflow:hidden;
     white-space:nowrap;
     display:inline-block;
-}
-.blacktext{
-	color: #000;
+
+    opacity: 0;
+     -webkit-transition: visibility 0.2s linear, opacity 0.2s linear;
+     -moz-transition: visibility 0.2s linear, opacity 0.2s linear;
+     -o-transition: visibility 0.2s linear, opacity 0.2s linear;
+     transition: visibility 0.2s linear, opacity 0.2s linear;
 }
 
 #container{
@@ -53,9 +52,7 @@ span{
 }
 #gui{
 	margin: 2px;
-	/*padding:10px;*/
 	width:1%;	
-	/*height:475px;*/
 	display:inline;
 
 	text-align:center;
@@ -67,15 +64,19 @@ span{
 	color: #fff;
 	border: 1px solid #1a1a1a;
 	textShadow: 1px 1px 0 #222;
-}
 
-#gui:hover .menubox {
 	-webkit-transition: width 0.5s ease-in-out;
     -moz-transition: width 0.5s ease-in-out;
     -o-transition: width 0.5s ease-in-out;
     transition: width 0.5s ease-in-out;
+
+
+}
+
+#gui:hover .menubox {
     width:94%;
     visibility: visible;
+    opacity: 1;
 }
 
 #gui:hover{

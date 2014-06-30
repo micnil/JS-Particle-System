@@ -18,22 +18,27 @@
     <div id="container">
         <canvas id="particleCanvas"></canvas>
         <canvas id="fieldCanvas"></canvas>
+
+        <!-- GUI components -->
         <div id="gui" draggable="true">
             <span>+</span>
+
             <div id="startStop" class="menubox">
                 <p class="menutitle">Particle System</p>
                 <button type="button" id="pauseBtn" class="myButton" value="pause">pause</button>
                 <button type="button" id="clearBtn" class="myButton" value="clear">clear</button> 
             </div>
+
             <div id="emitterBox" class="menubox">
                 <p class="menutitle">Emitters</p>
                 <button type="button" id="createEmitterBtn" class="myButton" value="create">create</button>
                 <button type="button" id="pauseEmitterBtn" class="myButton" value="1">pause</button>
                 <p class="menutext">Angle (0 - 360): </p>
-                    <input id="shootingAngle" class="blacktext" type="number" value="20" name="angle" min="1" max="360">
+                <input id="shootingAngle" class="blacktext" type="number" value="20" name="angle" min="1" max="360">
                 <p class="menutext">speed of particles</p>
                 <input id="magnitudeSize" type="range" min="0" max="100" value="50" step="1" onchange="rangevalue.value=value" />
             </div>
+
             <div id="fieldBox" class="menubox">
                 <p class="menutitle">Force Fields</p>
                 <button type="button" id="createFieldBtn" class="myButton" value="create">create</button>
@@ -44,7 +49,10 @@
                     <input type="radio" name="forceType" value="pusher">Pusher
                 </form>
             </div>
+
         </div>
+
+
     </div>    
 </body>
 </html>

@@ -1,3 +1,7 @@
+/** 
+*	Particlesystem class, keeps track of all the emitters, forcefields and 
+*	particles. is seperable from the anvasManager.
+*/
 function ParticleSystem(){
 	this.particles = new Array();
 	this.emitters = new Array();
@@ -30,10 +34,8 @@ ParticleSystem.prototype = {
 	},
 
 	init: function() {
-		this.emitters.push(new Emitter(new Vector(WIDTH/2, HEIGHT/2),new Vector(1, 1),20.0 ,60.0 ));
-		//this.emitters.push(new Emitter(new Vector(WIDTH/3, HEIGHT/2),new Vector(1, -1),20.0 ,60.0 ));
-		this.forceFields.push(new ForceField(new Vector(3*WIDTH/4, HEIGHT/2),15.0,-1.0));
-		//this.forceFields.push(new ForceField(new Vector(WIDTH/2, 3*HEIGHT/4),15.0));
+		this.emitters.push(new Emitter(new Vector(WIDTH/3, HEIGHT/2),new Vector(1, 1),20.0 ,60.0 ));
+		this.forceFields.push(new ForceField(new Vector(2*WIDTH/3, HEIGHT/2),15.0,-1.0));
 	},
 
 	draw: function(context, contextLayer) {

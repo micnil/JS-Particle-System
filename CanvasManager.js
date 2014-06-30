@@ -1,5 +1,8 @@
 var WIDTH = window.innerWidth;
 var HEIGHT = window.innerHeight;
+/** 
+*	Canvas manager class, This class handles the two canvases and GUI actions
+*/
 function CanvasManager(particleCanvas,fieldCanvas, ps){
 
 	this.particleCanvas = particleCanvas;
@@ -106,6 +109,7 @@ CanvasManager.prototype = {
   		function loop(){
   			fpsmeter.tickStart();
   			var delta = (myCanvasManager.timestamp() - lastCall)/1000;
+  			console.log(delta);
   			lastCall = myCanvasManager.timestamp();
   			accum += delta;
 
@@ -173,13 +177,11 @@ CanvasManager.prototype = {
 		// a little bit ugly maybe
 		// if button value is 1, then emitters are shooting and we want to turn them of.
 		if(this.pauseEmittersBtn.value == "1"){
-			console.log("hej");
 			this.pauseEmittersBtn.value="0";
 			this.pauseEmittersBtn.innerHTML = "start";
 			particleSystem.stopShooting();
 		}
 		else{
-			console.log("hej1!");
 			this.pauseEmittersBtn.value="1";
 			this.pauseEmittersBtn.innerHTML = "pause";
 			particleSystem.startShooting();
