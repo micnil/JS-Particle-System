@@ -10,14 +10,21 @@ function ForceField(pos,w,effect){
 ForceField.prototype = {
 
 	applyForce : function(particle) { 
-		var distance=this.position.distanceFrom(particle.position);
-		var repellDirection=particle.position.subtract(this.position);
+		var distance = this.position.distanceFrom(particle.position);
 
-		if(this.weight/distance>0.001)
-			particle.acceleration = particle.acceleration.add(repellDirection.multiply(30*this.weight/(Math.sqrt(distance)*distance))).multiply(this.effect);
+		var forceDirection
+		if(this.effect==1)
+			forceDirection = particle.position.subtract(this.position);
+		else
+			forceDirection = this.position.subtract(particle.position);
+
+		forceDirection.normalize();
+
+		if(distance > this.weight-2)
+			particle.acceleration = particle.acceleration.add(forceDirection.multiply(50*this.weight/Math.sqrt(distance)));
 
 		if(distance<=this.weight)
-			particle.velocity = particle.velocity.reflect(repellDirection);	
+			particle.velocity = particle.velocity.reflect(forceDirection);	
 	},
 
 	moveTo : function(dragOff, mouseCoords) {

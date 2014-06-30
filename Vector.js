@@ -30,9 +30,10 @@ Vector.prototype = {
 		this.y=newPosY;
 		//return new Vector(newPosX,newPosY)
 	},
-	normalize: function() { 
-		this.x = this.x / Math.sqrt(this.x*this.x + this.y*this.y);
-		this.y = this.y / Math.sqrt(this.x*this.x + this.y*this.y);
+	normalize: function() {
+		var magnitude = Math.sqrt(this.x*this.x + this.y*this.y);
+		this.x = this.x / magnitude;
+		this.y = this.y / magnitude;
 	},
 	distanceFrom: function(vector) { 
 		

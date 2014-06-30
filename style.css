@@ -19,17 +19,24 @@ span{
 	color: #999999;
 }
 .menubox{
-	margin: 4px 0px;
+	/*margin-top: 4px;
+	margin-bottom: 4px;
+	margin-left: 5px;*/
+	margin:4px 3%;
+
 	padding: 5px 0px;
-	width:0%;
+	width:94%;
 	background: #555;
 	text-align:center;
 	border-radius: 5px;
-	float:left;
-
+	float:right;
+	visibility: hidden;
 	overflow:hidden;
     white-space:nowrap;
     display:inline-block;
+}
+.blacktext{
+	color: #000;
 }
 
 #container{
@@ -48,7 +55,8 @@ span{
 	margin: 2px;
 	/*padding:10px;*/
 	width:1%;	
-
+	/*height:475px;*/
+	display:inline;
 
 	text-align:center;
 	position: absolute; 
@@ -60,25 +68,22 @@ span{
 	border: 1px solid #1a1a1a;
 	textShadow: 1px 1px 0 #222;
 }
-#expand{
-	width:5%;
-	height:375px;
-	float:left;
-}
+
 #gui:hover .menubox {
-	-webkit-transition: width 1s ease-in-out;
-    -moz-transition: width 1s ease-in-out;
-    -o-transition: width 1s ease-in-out;
-    transition: width 1s ease-in-out;
-    width:90%;
+	-webkit-transition: width 0.5s ease-in-out;
+    -moz-transition: width 0.5s ease-in-out;
+    -o-transition: width 0.5s ease-in-out;
+    transition: width 0.5s ease-in-out;
+    width:94%;
+    visibility: visible;
 }
 
 #gui:hover{
-	-webkit-transition: width 1s ease-in-out;
-    -moz-transition: width 1s ease-in-out;
-    -o-transition: width 1s ease-in-out;
-    transition: width 1s ease-in-out;
-    width:250px;
+	-webkit-transition: width 0.5s ease-in-out;
+    -moz-transition: width 0.5s ease-in-out;
+    -o-transition: width 0.5s ease-in-out;
+    transition: width 0.5s ease-in-out;
+    width:20%;
 }
 
 /* ------- borrowed css -------- */

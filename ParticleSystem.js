@@ -2,6 +2,7 @@ function ParticleSystem(){
 	this.particles = new Array();
 	this.emitters = new Array();
 	this.forceFields = new Array();
+	this.shoot=true;
 }
 
 ParticleSystem.prototype = {
@@ -9,8 +10,9 @@ ParticleSystem.prototype = {
 	update: function(dt) { 
 
 		//shoot particles from emitters
-		for(var i=0;i<this.emitters.length;i++)
-			this.particles.push(this.emitters[i].shoot());
+		if(this.shoot == true)
+			for(var i=0;i<this.emitters.length;i++)
+				this.particles.push(this.emitters[i].shoot());
 
 		// reset acceleration
 		for(var i=0;i<this.particles.length;i++)
@@ -85,6 +87,25 @@ ParticleSystem.prototype = {
 		while(this.forceFields.length > 0) {
 			this.forceFields.pop();
 		}
+	},
+
+	createEmitter: function(pos, direction, angle, magnitude, radius){
+		this.emitters.push(new Emitter(pos, direction, angle, magnitude, radius));
+	},
+
+	createForceField: function(pos, weight, effect){
+		this.forceFields.push(new ForceField(pos,weight,effect))
+
+		for (var i = 0; i < this.forceFields.length; i++) {
+			console.log("forcefield effect %s: %s",i,this.forceFields[i].effect);
+		}
+	},
+
+	stopShooting: function(){
+		this.shoot=false;
+	},
+	startShooting: function(){
+		this.shoot=true;
 	}
 
 

@@ -16,7 +16,10 @@ function CanvasManager(particleCanvas,fieldCanvas, ps){
 
 	this.pauseBtn = document.getElementById('pauseBtn');
 	this.clearBtn = document.getElementById('clearBtn');
-	
+	this.createEmitterBtn = document.getElementById('createEmitterBtn');
+	this.pauseEmittersBtn = document.getElementById('pauseEmitterBtn');
+	this.createForceFieldBtn = document.getElementById('createFieldBtn');
+
 	/*  states  */
 
 	// When we are dragging an object, set to true.
@@ -40,6 +43,9 @@ function CanvasManager(particleCanvas,fieldCanvas, ps){
 	fieldCanvas.addEventListener('mouseup', this.mouseUpListener.bind(this), false);
 	pauseBtn.addEventListener('click',  this.freezeBtnAction.bind(this),false);
 	clearBtn.addEventListener('click',  this.clearBtnAction.bind(this),false);
+	createEmitterBtn.addEventListener('click',  this.createEmitterBtnAction.bind(this),false);
+	this.pauseEmittersBtn.addEventListener('click',  this.pauseEmitterBtnAction.bind(this),false);
+	this.createForceFieldBtn.addEventListener('click',  this.createForceFieldBtnAction.bind(this),false);
 
 
 }
@@ -128,7 +134,6 @@ CanvasManager.prototype = {
 	freezeBtnAction: function(){
 		if(this.freeze){
 			this.freeze=false;
-			console.log(document.getElementById('pauseBtn').value);
 			this.pauseBtn.innerHTML = "pause";
 		}
 		else{
@@ -139,6 +144,66 @@ CanvasManager.prototype = {
 
 	clearBtnAction: function(){
 		particleSystem.clearParticleSystem();
+	},
+
+	createEmitterBtnAction: function(){
+
+		var maxX = this.particleCanvas.width - 40;
+		var maxY = this.particleCanvas.height - 40;
+		rand1=Math.random();
+		rand2=Math.random();
+		var randX = rand1 * maxX + 20;
+		var randY = rand2 * maxY + 20;
+		var pos = new Vector(randX,randY);
+		var direction = new Vector((rand1-0.5)*2,(rand2-0.5)*2);
+		direction.normalize();
+
+		var angle = document.getElementById('shootingAngle').value;
+
+		if(isNaN(angle))
+			angle=20;
+
+		var magnitude = document.getElementById('magnitudeSize').value;
+		var radius = 20;
+		this.particleSystem.createEmitter(pos,direction,angle,magnitude,radius);
+	},
+
+	pauseEmitterBtnAction: function(){
+
+		// a little bit ugly maybe
+		// if button value is 1, then emitters are shooting and we want to turn them of.
+		if(this.pauseEmittersBtn.value == "1"){
+			console.log("hej");
+			this.pauseEmittersBtn.value="0";
+			this.pauseEmittersBtn.innerHTML = "start";
+			particleSystem.stopShooting();
+		}
+		else{
+			console.log("hej1!");
+			this.pauseEmittersBtn.value="1";
+			this.pauseEmittersBtn.innerHTML = "pause";
+			particleSystem.startShooting();
+		}
+	},
+
+	createForceFieldBtnAction: function(){
+
+		var maxX = this.particleCanvas.width - 40;
+		var maxY = this.particleCanvas.height - 40;
+		rand1=Math.random();
+		rand2=Math.random();
+		var randX = rand1 * maxX + 20;
+		var randY = rand2 * maxY + 20;
+		var pos = new Vector(randX,randY);
+
+		var weight = document.getElementById('weightSize').value;
+
+		var type = document.getElementsByName('forceType');
+
+		if (type[0].checked)
+			this.particleSystem.createForceField(pos,weight,-1);
+		else if(type[1].checked)
+			this.particleSystem.createForceField(pos,weight,1);
 	}
 
 }
