@@ -24,9 +24,9 @@ Particle.prototype = {
 	},
 	isOutOfBounds: function(){
 
-		if(this.position.x < -50 || this.position.x>(WIDTH+50))
+		if(this.position.x < -100 || this.position.x>(WIDTH+100))
 			return true;
-		if(this.position.y < -50 || this.position.y>(HEIGHT+50))
+		if(this.position.y < -100 || this.position.y>(HEIGHT+100))
 			return true;
 
 		return false;
