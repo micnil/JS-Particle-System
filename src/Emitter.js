@@ -20,6 +20,7 @@ Emitter.prototype = {
 		var velocity = new Vector(this.direction.x,this.direction.y);
 		velocity.rotate((Math.random()*2-1)*(this.angle/2));
 		velocity = velocity.multiply(this.magnitude);
+		console.log(Particle.numOfParticles);
 		return new Particle(this.position,velocity,0);	
 	},
 

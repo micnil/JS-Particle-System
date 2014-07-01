@@ -28,14 +28,19 @@ ParticleSystem.prototype = {
 				this.forceFields[i].applyForce(this.particles[j]);
 			}
 		//move the particles (update velocity & position)
-		for(var i=0;i<this.particles.length;i++)
+		for(var i=0;i<this.particles.length;i++){
 			this.particles[i].move(dt);
+			if(this.particles[i].isOutOfBounds()){
+				this.particles.splice(i,1);
+				Particle.numOfParticles--;
+			}
+		}
 		
 	},
 
 	init: function() {
 		this.emitters.push(new Emitter(new Vector(WIDTH/3, HEIGHT/2),new Vector(1, 1),20.0 ,60.0 ));
-		this.forceFields.push(new ForceField(new Vector(2*WIDTH/3, HEIGHT/2),15.0,-1.0));
+		this.forceFields.push(new ForceField(new Vector(2*WIDTH/3, HEIGHT/2),150.0,-1.0));
 	},
 
 	draw: function(context, contextLayer) {

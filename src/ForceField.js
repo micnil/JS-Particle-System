@@ -2,10 +2,11 @@
 *	Forcefield class, can act as a particle puller (gravity, effect=-1) and as
 *	a pusher (effect=1).
 */
-function ForceField(pos,w,effect){
+function ForceField(pos,w,effect, r){
 	this.position = pos || new Vector(0, 0);
 	this.weight = w || 10.0;
 	this.effect = effect || 1.0;
+	this.radius = r || 20;
 	
 	//color depends on effect (puller or pusher)
 	var color = 127 + (effect*127);
@@ -25,11 +26,11 @@ ForceField.prototype = {
 
 		forceDirection.normalize();
 
-		//to avoid division with zero 
-		if(distance > this.weight-2)
-			particle.acceleration = particle.acceleration.add(forceDirection.multiply(50*this.weight/Math.sqrt(distance)));
+        var force = this.weight / Math.pow((distance+this.weight/2+distance+this.weight/2),1.5);
+        if(distance > this.radius-2)
+        	particle.acceleration = particle.acceleration.add(forceDirection.multiply(3000*force));
 
-		if(distance<=this.weight)
+		if(distance<=this.radius)
 			particle.velocity = particle.velocity.reflect(forceDirection);	
 	},
 
@@ -45,18 +46,18 @@ ForceField.prototype = {
 	},
 
 	isHit : function(position) {
-		return position.distanceFrom(this.position) <= this.weight;
+		return position.distanceFrom(this.position) <= this.radius;
 	},
 
 	draw : function(context){
 
-		var grd=context.createRadialGradient(this.position.x,this.position.y,0,this.position.x,this.position.y,this.weight);
+		var grd=context.createRadialGradient(this.position.x,this.position.y,0,this.position.x,this.position.y,this.radius);
 		grd.addColorStop(0,"white");
 		grd.addColorStop(1, this.color);
 
 		context.fillStyle=grd;
 		context.beginPath();
-		context.arc(this.position.x, this.position.y, this.weight, 0, Math.PI * 2);
+		context.arc(this.position.x, this.position.y, this.radius, 0, Math.PI * 2);
 		context.closePath();
 		context.fill();
 
