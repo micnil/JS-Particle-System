@@ -1,4 +1,4 @@
-A simple javascript particle system.
+A javascript particle system.
 
 the class hierarchy is as follows: 
 
