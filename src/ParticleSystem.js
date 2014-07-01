@@ -96,11 +96,7 @@ ParticleSystem.prototype = {
 	},
 
 	createForceField: function(pos, weight, effect){
-		this.forceFields.push(new ForceField(pos,weight,effect))
-
-		for (var i = 0; i < this.forceFields.length; i++) {
-			console.log("forcefield effect %s: %s",i,this.forceFields[i].effect);
-		}
+		this.forceFields.push(new ForceField(pos,weight,effect));
 	},
 
 	stopShooting: function(){

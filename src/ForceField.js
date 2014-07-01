@@ -9,7 +9,7 @@ function ForceField(pos,w,effect){
 	
 	//color depends on effect (puller or pusher)
 	var color = 127 + (effect*127);
-	this.color = "rgb("+color+",200, 0)";
+	this.color = "rgb("+color+",150, 0)";
 }
 ForceField.prototype = {
 
@@ -50,7 +50,11 @@ ForceField.prototype = {
 
 	draw : function(context){
 
-		context.fillStyle = this.color;
+		var grd=context.createRadialGradient(this.position.x,this.position.y,0,this.position.x,this.position.y,this.weight);
+		grd.addColorStop(0,"white");
+		grd.addColorStop(1, this.color);
+
+		context.fillStyle=grd;
 		context.beginPath();
 		context.arc(this.position.x, this.position.y, this.weight, 0, Math.PI * 2);
 		context.closePath();

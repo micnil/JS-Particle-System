@@ -64,7 +64,12 @@ Emitter.prototype = {
 
 	draw: function(context){
 
-		context.fillStyle = this.color;
+		var grd=context.createRadialGradient(this.position.x,this.position.y,0,this.position.x,this.position.y,this.radius-7);
+		grd.addColorStop(0,"white");
+		grd.addColorStop(1, this.color);
+		context.fillStyle=grd;
+		
+		context.fillStyle = grd;
 		context.beginPath();
 		context.arc(this.position.x, this.position.y, this.radius-7, 0, Math.PI * 2);
 		context.closePath();
@@ -90,7 +95,7 @@ Emitter.prototype = {
 			-angleToShootingDirection + (this.angle+0.03), 
 			(Math.PI * 2) - angleToShootingDirection - (this.angle+0.03));
 
-		context.strokeStyle = this.color;
+		context.strokeStyle = "white";
 		context.stroke();
 	}
 

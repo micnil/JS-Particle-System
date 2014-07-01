@@ -109,7 +109,6 @@ CanvasManager.prototype = {
   		function loop(){
   			fpsmeter.tickStart();
   			var delta = (myCanvasManager.timestamp() - lastCall)/1000;
-  			console.log(delta);
   			lastCall = myCanvasManager.timestamp();
   			accum += delta;
 
