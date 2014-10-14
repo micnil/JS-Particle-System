@@ -1,5 +1,8 @@
 A javascript particle system.
 
+demo:
+michaelnilsson.me/JS-Particle-System
+
 the class hierarchy is as follows: 
 
 			 CanvasManager
