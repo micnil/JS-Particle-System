@@ -14,18 +14,17 @@ function Emitter(pos ,d ,a ,m, r ){
 }
 Emitter.prototype = {
 
-	shoot: function() { 
+	shoot: function() {
 		//wow
 		//velocity = the selected direction * a randomized rotation within given angle * the magnitude (speed)
 		var velocity = new Vector(this.direction.x,this.direction.y);
 		velocity.rotate((Math.random()*2-1)*(this.angle/2));
 		velocity = velocity.multiply(this.magnitude);
-		console.log(Particle.numOfParticles);
-		return new Particle(this.position,velocity,0);	
+		return new Particle(this.position,velocity,0);
 	},
 
 	moveTo: function(dragOff, mouseCoords) {
-	
+
 		//if rotation
 		if(dragOff.getMagnitude()>10){
 
@@ -44,8 +43,7 @@ Emitter.prototype = {
 
 			this.direction.rotate(moveAngle);
 			dragOff.rotate(moveAngle);
-			
-			
+
 		}else{
 
 			var newPosition = mouseCoords.subtract(dragOff);
@@ -69,7 +67,7 @@ Emitter.prototype = {
 		grd.addColorStop(0,"white");
 		grd.addColorStop(1, this.color);
 		context.fillStyle=grd;
-		
+
 		context.fillStyle = grd;
 		context.beginPath();
 		context.arc(this.position.x, this.position.y, this.radius-7, 0, Math.PI * 2);
@@ -78,7 +76,7 @@ Emitter.prototype = {
 
 		context.beginPath();
 		this.lineOffset=this.lineOffset+0.1;
-		
+
 		if (typeof context.setLineDash === 'undefined') { //Firefox
 			context.mozDash = [2,1];
 			context.mozDashOffset = this.lineOffset;
@@ -91,8 +89,8 @@ Emitter.prototype = {
 
 		var angleToShootingDirection = this.direction.getShortestAngleFrom(new Vector(1,0));
 		context.arc(this.position.x,
-			this.position.y, 
-			this.radius, 
+			this.position.y,
+			this.radius,
 			-angleToShootingDirection + (this.angle+0.03), 
 			(Math.PI * 2) - angleToShootingDirection - (this.angle+0.03));
 
@@ -100,5 +98,5 @@ Emitter.prototype = {
 		context.stroke();
 	}
 
-	
+
 }
