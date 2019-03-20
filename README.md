@@ -5,15 +5,15 @@ michaelnilsson.me/JS-Particle-System
 
 the class hierarchy is as follows: 
 
-			 CanvasManager
+			     CanvasManager
 
 				  |
 
-		    ParticleSystem
+		            ParticleSystem
 
 		|		  |		 	|
 
-	ForceField	Particle  Emitter
+	ForceField             Particle               Emitter
 
 
 main() initialized the simulation and
